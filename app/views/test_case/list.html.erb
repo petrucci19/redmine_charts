@@ -1,0 +1,36 @@
+<h1>Test Cases</h1>
+<% if @testcases.blank? %>
+<p>There are no test cases to display.</p>
+<% else %>
+<table id="testcases" class="table">
+<tr>
+	<td><h4>Test Case</h4></td><td><h4>Status</h4></td><td><h4>Author</h4></td><td><h4>Project</h4></td>
+</tr>
+<% @testcases.each do |c| %>
+<tr>
+	<td>
+		<%= link_to c.title, {:action => 'show', :id => c.id} -%>
+	</td>
+
+	<td>
+		<%= c.status.name -%>
+	</td>
+
+	<td>
+		<%= link_to c.author.name, {:controller => 'author', :action => 'list', :aid => c.author_id} -%>
+		<!--<%= c.author.name -%>-->
+	</td>
+	<td>
+		<%= link_to c.project.name, {:controller => 'project', :action => 'list', :pid => c.project_id} -%>
+		<!--<%= c.project.name -%>-->
+	</td>
+</tr>
+<% end %>
+</table>
+<% end %>
+
+<% if signed_in? %>
+	<div id="addtestcase">
+		<%=button_to "Add a Test Case", {:action => "new", :controller => "test_case"}, {:class => "btn btn-large btn-primary"} %>
+	</div>
+<% end %>

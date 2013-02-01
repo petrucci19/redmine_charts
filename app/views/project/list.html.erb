@@ -1,0 +1,258 @@
+<% content_for :head do %>
+	<script type="text/javascript">
+		$(document).ready(function(){
+		  
+		  var piedata = [ ['default',1] ];
+
+		  var s2= [[null]];
+		  
+		  var txt;
+
+		  var h1 = parseInt(getStyle('prons','height'), 10);
+		  var h2 = parseInt(getStyle('prop','height'), 10);
+		  var h3 = parseInt(getStyle('prof','height'), 10);
+		  var h = Math.max(h1,h2,h3);
+		  var ht = h+'px';
+		  //window.alert(ht);
+		  document.getElementById('prons').style.height=ht;
+		  document.getElementById('prop').style.height=ht;
+		  document.getElementById('prof').style.height=ht;
+
+		  $('.block').block({ 
+		                      message: '<h2 style="text-align:center;">Processing</h2>', 
+		                      css: { 
+		                          border: 'none',
+		                          padding: '0px 120px 0px 80px', 
+		                          backgroundColor: '#000', 
+		                          '-webkit-border-radius': '10px', 
+		                          '-moz-border-radius': '10px', 
+		                          opacity: .5, 
+		                          color: '#fff' 
+		                      } 
+		                  }); 
+		           
+		  //setTimeout($('.probox').unblock(), 6000);
+
+		  dataRenderer();
+
+
+		  plot1 = jQuery.jqplot ('pie', [ piedata, s2 ] , 
+		    { 
+		      seriesDefaults: {
+		        // Make this a pie chart.
+		        renderer: jQuery.jqplot.DonutRenderer,
+		        
+		        rendererOptions:{
+		          // Donut's can be cut into slices like pies.
+					seriesColors: [ "#9F9FFF", "rgba(255, 127, 0, 0.78)", "rgba(50, 205, 50, 0.7)"],
+					sliceMargin: 3,
+					// Pies and donuts can start at any arbitrary angle.
+					startAngle: -90,
+					showDataLabels: true,
+					// By default, data labels show the percentage of the donut/pie.
+					// You can show the data 'value' or data 'label' instead.
+					dataLabels: 'value',
+					highlightMouseOver: false,
+					highlightMouseDown: false
+					//highlightColor: "blue"
+		        }
+		      }, 
+		      legend: { show:true},
+		      grid: {borderWidth:0, background: '#ffffff', shadow:false}
+		    }
+		  );
+
+		  plot2 = jQuery.jqplot ('pie1', [ piedata, s2 ] , 
+		    { 
+		      seriesDefaults: {
+		        // Make this a pie chart.
+		        renderer: jQuery.jqplot.DonutRenderer,
+		        
+		        rendererOptions:{
+		          // Donut's can be cut into slices like pies.
+					seriesColors: [ "#9F9FFF", "rgba(255, 127, 0, 0.78)", "rgba(50, 205, 50, 0.7)"],
+					sliceMargin: 3,
+					// Pies and donuts can start at any arbitrary angle.
+					startAngle: -90,
+					showDataLabels: true,
+					// By default, data labels show the percentage of the donut/pie.
+					// You can show the data 'value' or data 'label' instead.
+					dataLabels: 'value',
+					highlightMouseOver: false,
+					highlightMouseDown: false
+		        }
+		      }, 
+		      legend: { show:true},
+		      grid: {borderWidth:0, background: '#ffffff', shadow:false}
+		    }
+		  );
+
+		  $("#block_test").click(function() {
+
+		      $('.block').block({ 
+		                      message: '<h1>Processing</h1>', 
+		                      css: { border: '3px solid #a00' } 
+		                  }); 
+		           
+		      setTimeout($('.probox').unblock(), 8000);
+		    
+		  });
+		  
+		  
+
+
+		  /*plot1 = jQuery.jqplot ('pie', [piedata], 
+		    { 
+		      seriesDefaults: {
+		        // Make this a pie chart.
+		        renderer: jQuery.jqplot.DonutRenderer,
+		        
+		        rendererOptions: {
+		          seriesColors: [ "#9F9FFF", "rgba(255, 127, 0, 0.78)", "rgba(50, 205, 50, 0.7)"],
+
+		          // Put data labels on the pie slices.
+		          // By default, labels show the percentage of the slice.
+		          showDataLabels: true
+		        }
+		      }, 
+		      legend: { show:true}
+		    }
+		  );*/
+
+		  /*plot2 = jQuery.jqplot ('pie1', [piedata], 
+		    { 
+		      seriesDefaults: {
+		        // Make this a pie chart.
+		        renderer: jQuery.jqplot.PieRenderer,
+		        
+		        rendererOptions: {
+		          seriesColors: [ "#9F9FFF", "rgba(255, 127, 0, 0.78)", "rgba(50, 205, 50, 0.7)"],
+
+		          // Put data labels on the pie slices.
+		          // By default, labels show the percentage of the slice.
+		          showDataLabels: true
+		        }
+		      }, 
+		      legend: { show:true}
+		    }
+		  );*/
+
+
+		});
+	</script>
+<%end%>
+
+
+<h1><%= Project.find(params[:pid]).name %></h1>
+
+<div class="container">
+	<div class="block" id="pie" style="height:300px; width:400px; padding:0px;"></div>
+
+	<div class="block" id="pie1" style="height:300px; width:400px; padding:0px;"></div>
+
+	<div id="summary" style="height:230px;">
+		<h2>Summary</h2>
+		<div id="summary_data">
+			<!--<p>
+				<button type="button" id="load_summary" onclick='dataRenderer()' >Load</button>
+				<button type="button" id="block_test" onclick='dataRenderer()' >Test</button>
+			</p>-->
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="probox" id="prons">
+		<p id="boxhead">Not Started</p>
+		<% if @p_testcases_ns.blank? %>
+		<p style="text-align:center;">There are no test cases to display.</p>
+		<% else %>
+
+		<table id="project_testcases" class="table">
+		<tr>
+			<td><h5>Test Case</h5></td><td><h5>Status</h5></td><td><h5>Author</h5></td>
+		</tr>
+		<% @p_testcases_ns.each do |c| %>
+		<tr>
+			<td>
+				<%= link_to c.title, :controller => 'test_case', :action => 'show', :id => c.id -%>
+			</td>
+
+			<td>
+				<%= c.status.name -%>
+			</td>
+			 	
+			<td>
+				<%= link_to c.author.name, {:controller => 'author', :action => 'list', :aid => c.author_id} -%>
+			</td>
+		</tr>
+		<% end %>
+		</table>
+		<% end %>
+	</div>
+
+
+
+
+	<div class="probox" id="prof">
+		<p id="boxhead">Failed</p>
+		<% if @p_testcases_f.blank? %>
+		<p style="text-align:center;">There are no test cases to display.</p>
+		<% else %>
+
+		<table id="project_testcases" class="table">
+		<tr>
+			<td><h5>Test Case</h5></td><td><h5>Status</h5></td><td><h5>Author</h5></td>
+		</tr>
+		<% @p_testcases_f.each do |c| %>
+		<tr>
+			<td>
+				<%= link_to c.title, :controller => 'test_case', :action => 'show', :id => c.id -%>
+			</td>
+
+			<td>
+				<%= c.status.name -%>
+			</td>
+			 	
+			<td>
+				<%= link_to c.author.name, {:controller => 'author', :action => 'list', :aid => c.author_id} -%>
+			</td>
+		</tr>
+		<% end %>
+		</table>
+		<% end %>
+	</div>
+
+
+
+
+	<div class="probox" id="prop">
+		<p id="boxhead">Passed</p>
+		<% if @p_testcases_p.blank? %>
+		<p style="text-align:center;">There are no test cases to display.</p>
+		<% else %>
+
+		<table id="project_testcases" class="table">
+		<tr>
+			<td><h5>Test Case</h5></td><td><h5>Status</h5></td><td><h5>Author</h5></td>
+		</tr>
+		<% @p_testcases_p.each do |c| %>
+		<tr>
+			<td>
+				<%= link_to c.title, :controller => 'test_case', :action => 'show', :id => c.id -%>
+			</td>
+
+			<td>
+				<%= c.status.name -%>
+			</td>
+			 	
+			<td>
+				<%= link_to c.author.name, {:controller => 'author', :action => 'list', :aid => c.author_id} -%>
+			</td>
+		</tr>
+		<% end %>
+		</table>
+		<% end %>
+	</div>
+
+</div>

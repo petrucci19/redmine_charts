@@ -1,0 +1,32 @@
+<h1><%= Author.find(params[:aid]).name %></h1>
+<% if @a_testcases.blank? %>
+<p>There are no test cases to display.</p>
+<% else %>
+<!--<p>These are the current test cases:</p>-->
+<table id="author_testcases" class="table">
+<tr>
+	<td><h4>Test Case</h4></td><td><h4>Status</h4></td><td><h4>Project</h4></td>
+</tr>
+<% @a_testcases.each do |c| %>
+<tr>
+	<td>
+		<%= link_to c.title, :controller => 'test_case', :action => 'show', :id => c.id -%>
+	</td>
+
+	<td>
+		<%= c.status.name -%>
+	</td>
+	 	
+	<td>
+		<%= link_to c.project.name, {:controller => 'project', :action => 'list', :pid => c.project_id} -%>
+	</td>
+</tr>
+<% end %>
+</table>
+<% end %>
+
+<% if signed_in? %>
+	<div id="addtestcase">
+		<%=button_to "Add a Test Case", {:action => "new", :controller => "test_case"}, {:class => "btn btn-large btn-primary"} %>
+	</div>
+<% end %>

@@ -1,0 +1,109 @@
+
+@import "bootstrap";
+
+$grayMediumLight: #eaeaea;
+
+
+
+html {
+  overflow-y: scroll;
+}
+
+body {
+  padding-top: 60px;
+  padding-bottom: 15px;
+}
+.navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
+  width:100%;
+}
+
+.navbar-inner .container{
+  padding-left:0px;
+  margin-left:60px;
+}
+
+.navbar .nav {
+  margin: 0 90px 0 0
+}
+
+.container {
+  width:1024px;
+}
+
+
+
+#logo {
+  float: left;
+  margin-right: 10px;
+  margin-left: 0px;
+  font-size: 1.7em;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  padding-top: 9px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+#logo:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+
+section {
+  overflow: auto;
+}
+
+textarea {
+  resize: vertical;
+}
+
+h1 {
+  font: 40px "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+  padding-top: 5px;
+  padding-bottom: 20px; 
+}
+
+.center {
+  text-align: center;
+}
+
+.center h1 {
+  margin-bottom: 10px;
+}
+
+.btn a:link {					/* unvisited link */
+	color:#FFFFFF;
+	text-decoration: none;
+}      
+
+.btn a:visited {					/* visited link */
+	color:#FFFFFF;
+	text-decoration: none;
+}  
+
+.btn a:hover {					/* mouse over link */
+	color:#E6E6E6;
+	text-decoration: none;
+}  
+
+.btn a:active {
+	color:#0000FF;
+	text-decoration: none;
+}
+
+/* forms */
+
+#error_explanation {
+  color: #f00;
+  ul {
+    list-style: none;
+    margin: 0 0 18px 0;
+  }
+}
+
+.field_with_errors {
+  @extend .control-group;
+  @extend .error;
+ }

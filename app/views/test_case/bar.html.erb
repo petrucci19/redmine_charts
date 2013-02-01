@@ -1,0 +1,226 @@
+<% content_for :head do %>
+	<script type="text/javascript">
+		
+		var bar1,arr,bar_ticks,obj;
+
+		function bar1Renderer(){
+			jQuery.ajax( {
+                   
+		        cache: false,
+		        url: '/bar1',
+		        dataType: "json",
+		        success:  function(data){
+		        	console.log(data);
+		        	arr = new Array();
+		        	bar_ticks = new Array();
+		        	//obj = $.parseJSON(data);
+		        	//console.log(obj);
+		        	for (var key in data) {
+					  //if (data.hasOwnProperty(key)) {
+					    arr.push(data[key]);
+					    bar_ticks.push(key);
+					  //}
+					}
+		        	//var s = [[200, 600, 700, 1000], [460, -210, 690, 820], [-260, -440, 320, 200]];
+					console.log(arr);
+					//bar1.series[0].data= arr;
+					//bar1.replot();
+					//bar1.series[0]= arr;  
+			        //console.log(bar1.series[0].data);
+			        
+			        $("#bar1").html("");
+			        $.jqplot('bar1', arr, {
+				        // The "seriesDefaults" option is an options object that will
+				        // be applied to all series in the chart.
+				        seriesDefaults:{
+				            renderer:$.jqplot.BarRenderer,
+				            rendererOptions: {fillToZero: true}
+				        },
+				        // Custom labels for the series are specified with the "label"
+				        // option on the series option.  Here a series option object
+				        // is specified for each series.
+				        series:[
+				            {label:'Design and Analysis'},
+				            {label:'Development'},
+				            {label:'Bug Fixing'}
+				        ],
+				        // Show the legend and put it outside the grid, but inside the
+				        // plot container, shrinking the grid to accomodate the legend.
+				        // A value of "outside" would not shrink the grid and allow
+				        // the legend to overflow the container.
+				        legend: {
+				            show: true,
+				            placement: 'outsideGrid'
+				        },
+				        axes: {
+				            // Use a category axis on the x axis and use our custom ticks.
+				            xaxis: {
+				                renderer: $.jqplot.CategoryAxisRenderer,
+				                ticks: bar_ticks
+				            },
+				            // Pad the y axis just a little so bars can get close to, but
+				            // not touch, the grid boundaries.  1.2 is the default padding.
+				            yaxis: {
+				                pad: 1.2
+				                //tickOptions: {formatString: '$%d'}
+				            }
+				        }
+				    });
+		    	},
+		    	error : function(XMLHttpRequest, textStatus, errorThrown) { console.log('Error bar1 ajax!'); }
+
+		    });
+		};
+
+		function bar2Renderer(){
+			jQuery.ajax( {
+                   
+		        cache: false,
+		        url: '/bar2',
+		        dataType: "json",
+		        success:  function(data){ 
+		        	
+					console.log(data);
+					bar2.series[0].data= data;  
+			        bar2.redraw();
+		    	},
+		    	error : function(XMLHttpRequest, textStatus, errorThrown) { console.log('Error bar2 ajax!'); }
+
+		    });
+		};
+
+		$(document).ready(function(){
+
+			//$('#tooltip1b').hide();
+			
+		    var s1 = [0,0,0,0];
+		    var s2 = [0,0,0,0];
+		    var s3 = [0,0,0,0];
+		    //var s4 = [4,5,6,7];
+		    // Can specify a custom tick Array.
+		    // Ticks should match up one for each y value (category) in the series.
+		    //var ticks = ['May', 'June', 'July', 'August'];
+		     
+		    bar1 = $.jqplot('bar1', [s1, s2, s3], {
+		        // The "seriesDefaults" option is an options object that will
+		        // be applied to all series in the chart.
+		        seriesDefaults:{
+		            renderer:$.jqplot.BarRenderer,
+		            rendererOptions: {fillToZero: true}
+		        },
+		        // Custom labels for the series are specified with the "label"
+		        // option on the series option.  Here a series option object
+		        // is specified for each series.
+		        series:[
+		            {label:'Design and Analysis'},
+		            {label:'Development'},
+		            {label:'Bug Fixing'}
+		        ],
+		        // Show the legend and put it outside the grid, but inside the
+		        // plot container, shrinking the grid to accomodate the legend.
+		        // A value of "outside" would not shrink the grid and allow
+		        // the legend to overflow the container.
+		        legend: {
+		            show: true,
+		            placement: 'outsideGrid'
+		        },
+		        axes: {
+		            // Use a category axis on the x axis and use our custom ticks.
+		            xaxis: {
+		                renderer: $.jqplot.CategoryAxisRender
+		            },
+		            // Pad the y axis just a little so bars can get close to, but
+		            // not touch, the grid boundaries.  1.2 is the default padding.
+		            yaxis: {
+		                pad: 1.05,
+		                min: 0,
+		                max: 100,
+		                numberTicks:11
+		            }
+		        }
+		    }); 
+
+
+			$("#bar1_load").click(function() {
+				bar1Renderer();
+			});
+
+
+			/*bar2 = $.jqplot('bar2', [s1, s2, s3, s4], {
+		        // The "seriesDefaults" option is an options object that will
+		        // be applied to all series in the chart.
+		        seriesDefaults:{
+		            renderer:$.jqplot.BarRenderer,
+		            rendererOptions: {fillToZero: true}
+		        },
+		        // Custom labels for the series are specified with the "label"
+		        // option on the series option.  Here a series option object
+		        // is specified for each series.
+		        series:[
+		            {label:'Design and Analysis'},
+		            {label:'Development'},
+		            {label:'Bug Fixing'}
+		        ],
+		        // Show the legend and put it outside the grid, but inside the
+		        // plot container, shrinking the grid to accomodate the legend.
+		        // A value of "outside" would not shrink the grid and allow
+		        // the legend to overflow the container.
+		        legend: {
+		            show: true,
+		            placement: 'outsideGrid'
+		        },
+		        axes: {
+		            // Use a category axis on the x axis and use our custom ticks.
+		            xaxis: {
+		                renderer: $.jqplot.CategoryAxisRenderer
+		                //ticks: ticks
+		            },
+		            // Pad the y axis just a little so bars can get close to, but
+		            // not touch, the grid boundaries.  1.2 is the default padding.
+		            yaxis: {
+		                pad: 1.05,
+		                tickOptions: {formatString: '$%d'}
+		            }
+		        }
+		    });*/
+
+
+			/*$('#chart1').bind('jqplotDataHighlight', 
+			    function (ev, seriesIndex, pointIndex, data, radius) {    
+			      var chart_left = $('#chart1').offset().left,
+			        chart_top = $('#chart1').offset().top,
+			        x = test_case_calendar.axes.xaxis.u2p(data[0]),  // convert x axis unita to pixels
+			        y = test_case_calendar.axes.yaxis.u2p(data[1]);  // convert y axis units to pixels
+			      var color = 'rgb(50%,50%,100%)';
+			      $('#tooltip1b').css({position:"absolute",left:chart_left+x+radius+5, top:chart_top+y, padding:"5px"});
+			      $('#tooltip1b').html('<span style="font-size:14px;color:#000">' +  data[2] + " Test Cases");
+			      $('#tooltip1b').show();
+				});
+			   
+			  // Bind a function to the unhighlight event to clean up after highlighting.
+			$('#chart1').bind('jqplotDataUnhighlight', 
+			      function (ev, seriesIndex, pointIndex, data) {
+			          $('#tooltip1b').empty();
+			          $('#tooltip1b').hide();
+			      });*/
+			
+		});
+
+
+
+	</script>
+<% end %>
+
+
+
+
+<h1>Bar Graphs</h1>
+
+<div="bar1_outer">
+	<div id="bar1" style="height:400px; width:600px;"></div>
+	<button type="button" id="bar1_load" class="btn btn-primary" style="margin-top:10px;">Load data</button>
+</div>
+
+<!--<div="bar2_outer" style="margin-top:30px;">
+	<div id="bar2" style="height:250px; width:350px;"></div>
+</div>-->

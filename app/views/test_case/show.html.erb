@@ -1,0 +1,33 @@
+<h1><%= @testcase.title %></h1>
+<table class="table">
+	<tr>
+		<td><strong>Test Case: </strong></td> 
+		<td>$<%= @testcase.content %></td>
+	</tr>
+	<tr>
+		<td><strong>Status:</strong></td>
+		<td><%= @testcase.status.name %></td>
+	</tr>
+	<tr>
+		<td><strong>Author:</strong></td>
+		<td><%= @testcase.author.name %></td>
+	</tr>
+	<tr>
+		<td><strong>Project:</strong></td>
+		<td><%= @testcase.project.name %></td>
+	</tr>
+	<tr>	
+		<td><strong>Created Date:</strong></td>
+		<td><%= @testcase.created_at %></td>
+	</tr>
+</table>
+
+<% if current_author?(@testcase.author) %>
+	<b class="btn btn-primary"> <%= link_to 'Edit', {:action => "edit", :id => @testcase.id} %></b>
+
+	<b class="btn btn-danger"> <%= link_to "Delete", {:action => 'delete', :id => @testcase.id},
+	:confirm => "Are you sure you want to delete this item?" %></b>
+
+<% end %>
+<hr />
+<%= link_to 'Test Cases', {:action => 'list'} %>

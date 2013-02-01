@@ -1,0 +1,8 @@
+<h1><%= @author.name %></h1>
+
+<p>
+Email: <%= @author.email %>
+</br>
+
+<%= link_to "My Test Cases", {controller: 'author', action: 'list', :aid => @current_author.id}  %>
+</p>
