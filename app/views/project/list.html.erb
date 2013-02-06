@@ -4,17 +4,13 @@
 		$(document).ready(function(){
 		  
 		  var piedata = [ ['default',1] ];
-
 		  var s2= [[null]];
-		  
 		  var txt;
-
 		  var h1 = parseInt(getStyle('prons','height'), 10);
 		  var h2 = parseInt(getStyle('prop','height'), 10);
 		  var h3 = parseInt(getStyle('prof','height'), 10);
 		  var h = Math.max(h1,h2,h3);
 		  var ht = h+'px';
-		  //window.alert(ht);
 		  document.getElementById('prons').style.height=ht;
 		  document.getElementById('prop').style.height=ht;
 		  document.getElementById('prof').style.height=ht;
@@ -42,24 +38,17 @@
 		  plot1 = jQuery.jqplot ('pie', [ piedata, s2 ] , 
 		    { 
 		      seriesDefaults: {
-		        // Make this a pie chart.
 		        renderer: jQuery.jqplot.DonutRenderer,
-		        
 		        rendererOptions:{
-		          // Donut's can be cut into slices like pies.
 					seriesColors: [ "#FF9900", "#38761D", "#3366CC"],
 					sliceMargin: 1,
-					// Pies and donuts can start at any arbitrary angle.
 					diameter: outer_diameter,
 					thickness: donut_thickness,
 					startAngle: -250,
 					showDataLabels: true,
-					// By default, data labels show the percentage of the donut/pie.
-					// You can show the data 'value' or data 'label' instead.
 					dataLabels: 'percent',
 					highlightMouseOver: false,
 					highlightMouseDown: false
-					//highlightColor: "blue"
 		        }
 		      }, 
 		      legend: { show:true},
@@ -70,20 +59,14 @@
 		  plot2 = jQuery.jqplot ('pie1', [ piedata, s2 ] , 
 		    { 
 		      seriesDefaults: {
-		        // Make this a pie chart.
 		        renderer: jQuery.jqplot.DonutRenderer,
-		        
 		        rendererOptions:{
-		          // Donut's can be cut into slices like pies.
 					seriesColors: [ "#FF9900", "#38761D", "#3366CC"],
 					sliceMargin: 1,
-					// Pies and donuts can start at any arbitrary angle.
 					diameter: outer_diameter,
 					thickness: donut_thickness,
 					startAngle: -250,
 					showDataLabels: true,
-					// By default, data labels show the percentage of the donut/pie.
-					// You can show the data 'value' or data 'label' instead.
 					dataLabels: 'percent',
 					highlightMouseOver: false,
 					highlightMouseDown: false
@@ -104,47 +87,6 @@
 		      setTimeout($('.probox').unblock(), 8000);
 		    
 		  });
-		  
-		  
-
-
-		  /*plot1 = jQuery.jqplot ('pie', [piedata], 
-		    { 
-		      seriesDefaults: {
-		        // Make this a pie chart.
-		        renderer: jQuery.jqplot.DonutRenderer,
-		        
-		        rendererOptions: {
-		          seriesColors: [ "#9F9FFF", "rgba(255, 127, 0, 0.78)", "rgba(50, 205, 50, 0.7)"],
-
-		          // Put data labels on the pie slices.
-		          // By default, labels show the percentage of the slice.
-		          showDataLabels: true
-		        }
-		      }, 
-		      legend: { show:true}
-		    }
-		  );*/
-
-		  /*plot2 = jQuery.jqplot ('pie1', [piedata], 
-		    { 
-		      seriesDefaults: {
-		        // Make this a pie chart.
-		        renderer: jQuery.jqplot.PieRenderer,
-		        
-		        rendererOptions: {
-		          seriesColors: [ "#9F9FFF", "rgba(255, 127, 0, 0.78)", "rgba(50, 205, 50, 0.7)"],
-
-		          // Put data labels on the pie slices.
-		          // By default, labels show the percentage of the slice.
-		          showDataLabels: true
-		        }
-		      }, 
-		      legend: { show:true}
-		    }
-		  );*/
-
-
 		});
 	</script>
 <%end%>
@@ -159,12 +101,7 @@
 
 	<div id="summary" style="height:230px;">
 		<h2>Summary</h2>
-		<div id="summary_data">
-			<!--<p>
-				<button type="button" id="load_summary" onclick='dataRenderer()' >Load</button>
-				<button type="button" id="block_test" onclick='dataRenderer()' >Test</button>
-			</p>-->
-		</div>
+		<div id="summary_data"></div>
 	</div>
 </div>
 

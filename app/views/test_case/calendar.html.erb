@@ -1,16 +1,6 @@
 <% content_for :head do %>
 	<script type="text/javascript">
 		var select, test_case_calendar;
-		/*Date.prototype.yyyymmdd = function() {
-		   var yyyy = this.getFullYear().toString();
-		   var mm = (this.getMonth()+1).toString();
-		   var dd  = this.getDate().toString();
-		   return yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]);
-		};
-
-		var d = new Date();
-		var t = d.yyyymmdd();
-		//alert(t);*/
 		var arr= new Array();
 		var x,i,temp;
 		var weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
@@ -27,8 +17,6 @@
 		        url: '/calendar/' + select,
 		        dataType: "json",
 		        success:  function(data){ 
-		        	//console.log(select);                
-		        	//console.log(data);
 		        	arr=new Array();		        	
 		        	x=10;
 		        	i=0;
@@ -172,10 +160,7 @@
 				        dataType: "json",
 				        success:  function(kk){
 				        	ns=f=p=0;                 
-				        	//console.log(kk);
-				    
 				        	if(kk[1] != undefined) {ns= kk[1]};
-				        	//console.log(ns);
 				        	if(kk[2] != undefined) {f= kk[2]};
 				        	if(kk[3] != undefined) {p= kk[3]};
 				        	$('#tooltip1b').css({position:"absolute",left:chart_left+x+radius+5, top:chart_top+y, padding:"5px"});
@@ -184,12 +169,9 @@
 				    	},
 				    	error : function(XMLHttpRequest, textStatus, errorThrown) { console.log('Error tooltip ajax!'); }
 
-				    });
-
-					
+				    });	
 				});
 			   
-			  // Bind a function to the unhighlight event to clean up after highlighting.
 			$('#chart1').bind('jqplotDataUnhighlight', 
 			      function (ev, seriesIndex, pointIndex, data) {
 			          $('#tooltip1b').empty();
@@ -197,9 +179,6 @@
 			      });
 			
 		});
-
-
-
 	</script>
 <% end %>
 
