@@ -1,0 +1,128 @@
+<% content_for :head do %>
+
+  <style>
+  
+    #ten_days {
+      font: 10px sans-serif;
+      width:400px;
+      height:100px;
+      border: 1px solid;
+      border-radius: 5px;
+      border-color: #ECECEC;
+    }
+
+    .day_bar {
+      fill: #80B2B2;
+    }
+
+    .axis {
+      fill: none;
+      stroke: #ECECEC;
+      stroke-width: 1px;
+      shape-rendering:crispEdges;
+        
+    }
+
+    .day_label{
+      fill:#5A7D7D;
+    }
+
+  </style>
+
+  <script type="text/javascript">
+
+    function ajaxTenDaysRenderer(){
+      jQuery.ajax( {       
+            //url: '/my_month/' + month + '/and/' + year,
+            url: '/ten_days',
+            dataType: "json",
+            success:  function(dataset){
+              d3.select("#ten_days").selectAll("svg").remove();
+              tenDaysRenderer(dataset);  
+            },
+            error : function(XMLHttpRequest, textStatus, errorThrown) { console.log('Error month calendar ajax!'); }
+        });
+    }
+
+    function tenDaysRenderer(dataset) {
+
+      var width = 400,
+          height = 100,
+          padding = 10,
+          bar_width = (width-9*padding)/10,
+          bar_max_height = height*0.8;
+      //    
+      var cellSize = 60,
+          padding = 4,
+          day_rect_height = 30
+          offset = 12,
+          day_label_offset = 2;
+
+      var day = d3.time.format("%w"),
+          week = d3.time.format("%U"),
+          percent = d3.format(".1%"),
+          format = d3.time.format("%Y-%m-%d")
+          month = d3.time.format("%b");
+
+
+      var svg = d3.select("#ten_days").selectAll("svg")
+          .data([1])
+        .enter().append("svg")
+          .attr("id","10_days_svg")
+          .attr("width", width)
+          .attr("height", height)
+        .append("g");
+          //.attr("transform", "translate(" + ((width - (cellSize + padding) * 53) / 2) + "," + (height - (cellSize + padding) * 7 - 1) + ")");
+          //.attr("transform", "translate(20,20)");
+      var today = new Date();
+      var days = d3.time.days(new Date(today.getFullYear(), today.getMonth(), today.getDate()-10), new Date(today.getFullYear(), today.getMonth(), today.getDate()) );
+
+      var day_bar = svg.selectAll(".day_bar")
+          .data(days)
+        .enter().append("rect")
+          .attr("class", "day_bar")
+          .attr("width", bar_width)
+          .attr("height", 0)
+          .attr("y", 0)
+          .attr("x", function(d,i){ return i * (width/10) })
+          .datum(format);
+
+      day_bar.append("title")
+          .text(function(d) { return d; });
+
+      var scale = d3.scale.linear()
+                      .domain([0, 12])
+                      .range([0, bar_max_height]);
+
+      day_bar.filter(function(d) { return d in dataset; })
+              .attr("height", function(d) { return scale(dataset[d]) } )
+              .attr("y", function(d) { return height-scale(dataset[d])-offset } )
+              .select("title")
+              .text(  function(d) { return d + ": " + dataset[d] + " hours"; }   );
+
+      var line = svg.selectAll(".axis")
+          .data([1])
+        .enter().append("line")
+          .attr("class", "axis")
+          .attr("x1", 0)
+          .attr("y1", height-offset)
+          .attr("x2", width)
+          .attr("y2", height-offset);
+
+      svg.selectAll(".day_label")
+          .data(days)
+        .enter().append("text")
+          .attr("class", "day_label")
+          .attr("x", function(d,i){ return i * (width/10) })
+          .attr("y", height-day_label_offset)
+          .text( function(d) { return (Number(day(d))+1).toString() + " "+ month(d)} );  
+    };
+
+    $(document).ready(function(){
+      ajaxTenDaysRenderer();
+    });   
+
+  </script>
+<% end %>
+
+<div id="ten_days"></div>

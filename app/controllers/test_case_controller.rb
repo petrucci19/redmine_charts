@@ -128,6 +128,15 @@ class TestCaseController < ApplicationController
 		end
     end
 
+    def ten_days
+    	data = {"2013-02-01"=>"5","2013-02-02"=>"8","2013-02-03"=>"9","2013-02-04"=>"3","2013-02-05"=>"6","2013-02-06"=>"1","2013-01-31"=>"2","2013-01-30"=>"4"};
+    	respond_to do |format|
+    		format.html
+		    format.xml { render :xml => data }
+		    format.json { render :json => data }
+		end
+    end
+
     def bar1	
     	s = {"Day 1" => [2, 6, 7] , "Day 2" => [4.6, 2.1, 6.9], "Day 3" => [2.6, 4.4, 3.2], "Day 4" => [4,5,2]};
 

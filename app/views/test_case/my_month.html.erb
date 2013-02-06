@@ -1,7 +1,7 @@
 <% content_for :head do %>
 
   <style>
-
+  
     #my_month_title {
       width:448px;
       text-align: center;
@@ -50,8 +50,6 @@
       stroke-width: 1px;
     }
 
-    
-
   </style>
 
   <script type="text/javascript">
@@ -79,11 +77,6 @@
     }
 
     function monthRenderer(dataset, month, year){
-
-      //var month = 0, year = 2012;
-      //d3.select("#my_month").selectAll(".day").remove();
-      //d3.select("#my_month").selectAll(".week").remove();
-      //d3.select("#my_month").selectAll(".date_label").remove();
 
       var width = 448,
           height = 350;
@@ -136,19 +129,14 @@
           .attr("y", (cellSize + padding)*0.3 )
           .text( function(d) { return dayOfWeek[d] });
 
-      /*svg.append("text")
-          .attr("transform", "translate(-6," + cellSize * 3.5 + ")rotate(-90)")
-          .style("text-anchor", "middle")
-          .text(function(d) { return d; });*/
       var days = d3.time.days(new Date(year, month, 1), new Date(year, (Number(month) + 1).toString(), 1) ) ;
-      //console.log(days);
+      
       var circle = svg.selectAll(".day")
           .data(days)
         .enter().append("circle")
           .attr("class", "day")
           .attr("r", 0)
           .attr("sharp-rendering", "crispEdges")
-          //.attr("height", cellSize)
           .attr("cy", function(d) { return ( d.getMonthWeek() * (cellSize + padding) + day_rect_height + (cellSize + padding)*0.55 ) ; })
           .attr("cx", function(d) { return (  day(d) * (cellSize + padding) + (cellSize + padding)*0.55 ) ; })
           .datum(format);
@@ -178,7 +166,7 @@
           .attr("y2", function(d) { return (d*(cellSize+padding) + day_rect_height); } );
 
       var t = Math.floor(cellSize*0.42);
-      //console.log(t);
+      
       var scale = d3.scale.linear()
                       .domain([0, 12])
                       .range([0, t]);
