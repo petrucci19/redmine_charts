@@ -15,7 +15,7 @@ function dataRenderer(){
                 document.getElementById("summary_data").innerHTML=txt;
                 //piedata = [  ['Not started',data['ns']], ['failed',data['f']] , ['started',data['p']]  ];
                 //console.log(piedata1);
-                plot1.series[0].data=  [ ['Not started',data['ns']], ['failed',data['f']] , ['started',data['p']] ] ;
+                plot1.series[0].data=  [ ['Design & Analysis',data['ns']], ['Bug-Fixing',data['f']] , ['Development',data['p']] ] ;
                 console.log(plot1.data);  
                 plot1.redraw();
                 //alert('test!');
@@ -37,7 +37,7 @@ function dataRenderer(){
                 //document.getElementById("summary_data").innerHTML=txt;
                 //piedata = [  ['Not started',data['ns']], ['failed',data['f']] , ['started',data['p']]  ];
                 //console.log(piedata1);
-                plot2.series[0].data= [ ['Not started',data['ns']], ['failed',data['f']] , ['started',data['p']] ];
+                plot2.series[0].data= [ ['Design & Analysis',data['ns']], ['Bug-Fixing',data['f']] , ['Development',data['p']] ];
                 console.log(plot2.data);  
                 plot2.redraw();
                 //alert('test!');

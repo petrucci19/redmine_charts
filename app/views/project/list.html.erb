@@ -1,4 +1,5 @@
 <% content_for :head do %>
+
 	<script type="text/javascript">
 		$(document).ready(function(){
 		  
@@ -35,6 +36,8 @@
 
 		  dataRenderer();
 
+		  var outer_diameter = 220,
+		  	  donut_thickness = outer_diameter*0.2;
 
 		  plot1 = jQuery.jqplot ('pie', [ piedata, s2 ] , 
 		    { 
@@ -44,14 +47,16 @@
 		        
 		        rendererOptions:{
 		          // Donut's can be cut into slices like pies.
-					seriesColors: [ "#9F9FFF", "rgba(255, 127, 0, 0.78)", "rgba(50, 205, 50, 0.7)"],
-					sliceMargin: 3,
+					seriesColors: [ "#FF9900", "#38761D", "#3366CC"],
+					sliceMargin: 1,
 					// Pies and donuts can start at any arbitrary angle.
-					startAngle: -90,
+					diameter: outer_diameter,
+					thickness: donut_thickness,
+					startAngle: -250,
 					showDataLabels: true,
 					// By default, data labels show the percentage of the donut/pie.
 					// You can show the data 'value' or data 'label' instead.
-					dataLabels: 'value',
+					dataLabels: 'percent',
 					highlightMouseOver: false,
 					highlightMouseDown: false
 					//highlightColor: "blue"
@@ -70,14 +75,16 @@
 		        
 		        rendererOptions:{
 		          // Donut's can be cut into slices like pies.
-					seriesColors: [ "#9F9FFF", "rgba(255, 127, 0, 0.78)", "rgba(50, 205, 50, 0.7)"],
-					sliceMargin: 3,
+					seriesColors: [ "#FF9900", "#38761D", "#3366CC"],
+					sliceMargin: 1,
 					// Pies and donuts can start at any arbitrary angle.
-					startAngle: -90,
+					diameter: outer_diameter,
+					thickness: donut_thickness,
+					startAngle: -250,
 					showDataLabels: true,
 					// By default, data labels show the percentage of the donut/pie.
 					// You can show the data 'value' or data 'label' instead.
-					dataLabels: 'value',
+					dataLabels: 'percent',
 					highlightMouseOver: false,
 					highlightMouseDown: false
 		        }

@@ -118,11 +118,18 @@ class TestCaseController < ApplicationController
 		end
     end
 
-    def bar1
-    	s1 = [20, 60, 70, 100];
-    	s2 = [46, 21, 69, 82];
-    	s3 = [26, 44, 32, 20];
-    	s = {"Day 1" => s1 , "Day 2" => s2, "Day 3" => s3};
+
+    def my_month
+    	data = {"2012-01-25"=>"5","2012-01-26"=>"8","2012-01-03"=>"9","2012-01-21"=>"3","2012-01-02"=>"6","2012-01-15"=>"1","2012-01-05"=>"2","2012-01-28"=>"4"};
+    	respond_to do |format|
+    		format.html
+		    format.xml { render :xml => data }
+		    format.json { render :json => data }
+		end
+    end
+
+    def bar1	
+    	s = {"Day 1" => [2, 6, 7] , "Day 2" => [4.6, 2.1, 6.9], "Day 3" => [2.6, 4.4, 3.2], "Day 4" => [4,5,2]};
 
     	respond_to do |format|
 		    format.xml { render :xml => s }

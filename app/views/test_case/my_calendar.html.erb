@@ -2,7 +2,7 @@
 	<style>
 		#year {
 		  font: 10px sans-serif;
-		  shape-rendering: crispEdges;
+		  
 		}
 
 		.day {
@@ -14,6 +14,11 @@
 		  fill: none;
 		  stroke: #C6C6C6;
 		  stroke-width: 1px;
+		  shape-rendering: crispEdges;
+		}
+
+		.month_label {
+		  fill: #B0B0B0;
 		}
 
 		.RdYlGn .q0-11{fill:rgb(165,0,38)}
@@ -31,7 +36,6 @@
 
 	<script type="text/javascript">
 
-
 		function ajaxYearRenderer(year_from, year_to){
 			jQuery.ajax( {       
 		       //url: '/year_data?from=' + year_from + '?to=' + year_to,
@@ -44,7 +48,6 @@
 		    	error : function(XMLHttpRequest, textStatus, errorThrown) { console.log('Error year calendar ajax!'); }
 
 		    });
-
 		}
 
 		function yearRenderer(dataset, year_from, year_to){
@@ -77,6 +80,7 @@
 			svg.append("text")
 			    .attr("transform", "translate(-6," + cellSize * 3.5 + ")rotate(-90)")
 			    .style("text-anchor", "middle")
+			    .attr("fill", "#737373")
 			    .text(function(d) { return d; });
 
 			var rect = svg.selectAll(".day")
@@ -97,6 +101,16 @@
 			  .enter().append("path")
 			    .attr("class", "month")
 			    .attr("d", monthPath);
+			
+			var monthShort = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+			svg.selectAll(".month_label")
+			    .data( d3.range(0,12) )
+			  .enter().append("text")
+			    .attr("class", "month_label")
+			    .attr("x", function(d) { return (d+0.45)*(cellSize+padding)*4.35 })
+			    .attr("y", -5)
+			    .text( function(d) { return monthShort[d] } );
 
 			rect.filter(function(d) { return d in dataset; })
 			      .attr("class", function(d) { return "day " + color(dataset[d]); })
@@ -123,16 +137,12 @@
 	
 	$(document).ready(function(){
 		$(".year_select").change(function() {
+				//$(this > option)[0].attr("disabled", "disabled");
 				year_from = $('select#year_from :selected').val();
 				year_to = $('select#year_to :selected').val();
 
-				if (year_from =="empty" || year_to =="empty") {
-						$("#year").html("");
-				}
-
-				else {
-					ajaxYearRenderer(year_from, (Number(year_to) + 1).toString() );
-				}
+				ajaxYearRenderer(year_from, (Number(year_to) + 1).toString() );
+				
 			});	
 	});
 
@@ -160,5 +170,3 @@
 </div>
 
 <div id="year"></div>
-<%= "params.." %>
-<%= params %>

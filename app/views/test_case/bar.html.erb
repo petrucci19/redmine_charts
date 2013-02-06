@@ -2,6 +2,7 @@
 	<script type="text/javascript">
 		
 		var bar1,arr,bar_ticks,obj;
+		var inn_arr_8 =[], inn_arr_1 = [], inn_arr_2 = [], inn_arr_3=[] ;
 
 		function bar1Renderer(){
 			jQuery.ajax( {
@@ -16,11 +17,15 @@
 		        	//obj = $.parseJSON(data);
 		        	//console.log(obj);
 		        	for (var key in data) {
-					  //if (data.hasOwnProperty(key)) {
-					    arr.push(data[key]);
-					    bar_ticks.push(key);
-					  //}
+					  if (data.hasOwnProperty(key)) {
+					    	inn_arr_8.push(8);
+					    	inn_arr_1.push(data[key][0]);
+					    	inn_arr_2.push(data[key][1]);
+					    	inn_arr_3.push(data[key][2]);
+					    	bar_ticks.push(key);
+					  }
 					}
+					arr.push(inn_arr_8, inn_arr_1, inn_arr_2, inn_arr_3);
 		        	//var s = [[200, 600, 700, 1000], [460, -210, 690, 820], [-260, -440, 320, 200]];
 					console.log(arr);
 					//bar1.series[0].data= arr;
@@ -32,14 +37,19 @@
 			        $.jqplot('bar1', arr, {
 				        // The "seriesDefaults" option is an options object that will
 				        // be applied to all series in the chart.
+				        seriesColors: [ "#3366CC", "#DC3912", "#FF9900", "#109618"],
 				        seriesDefaults:{
 				            renderer:$.jqplot.BarRenderer,
-				            rendererOptions: {fillToZero: true}
+				            rendererOptions: {
+				            	fillToZero: true,
+				            	barWidth: 10
+				            }				            
 				        },
 				        // Custom labels for the series are specified with the "label"
 				        // option on the series option.  Here a series option object
 				        // is specified for each series.
 				        series:[
+				        	{label:'Expected Hours'},
 				            {label:'Design and Analysis'},
 				            {label:'Development'},
 				            {label:'Bug Fixing'}
@@ -53,7 +63,7 @@
 				            placement: 'outsideGrid'
 				        },
 				        axes: {
-				            // Use a category axis on the x axis and use our custom ticks.
+				            // Use a category axis on the x axis and use our custom tick
 				            xaxis: {
 				                renderer: $.jqplot.CategoryAxisRenderer,
 				                ticks: bar_ticks
@@ -101,7 +111,7 @@
 		    // Ticks should match up one for each y value (category) in the series.
 		    //var ticks = ['May', 'June', 'July', 'August'];
 		     
-		    bar1 = $.jqplot('bar1', [s1, s2, s3], {
+		    /*bar1 = $.jqplot('bar1', [s1, s2, s3], {
 		        // The "seriesDefaults" option is an options object that will
 		        // be applied to all series in the chart.
 		        seriesDefaults:{
@@ -138,7 +148,7 @@
 		                numberTicks:11
 		            }
 		        }
-		    }); 
+		    }); */
 
 
 			$("#bar1_load").click(function() {
