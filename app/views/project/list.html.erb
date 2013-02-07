@@ -1,93 +1,21 @@
 <% content_for :head do %>
 
 	<script type="text/javascript">
-		$(document).ready(function(){
-		  
-		  var piedata = [ ['default',1] ];
-		  var s2= [[null]];
-		  var txt;
-		  var h1 = parseInt(getStyle('prons','height'), 10);
-		  var h2 = parseInt(getStyle('prop','height'), 10);
-		  var h3 = parseInt(getStyle('prof','height'), 10);
-		  var h = Math.max(h1,h2,h3);
-		  var ht = h+'px';
-		  document.getElementById('prons').style.height=ht;
-		  document.getElementById('prop').style.height=ht;
-		  document.getElementById('prof').style.height=ht;
+		$(document).ready(function(){	  
+			var h1 = parseInt(getStyle('prons','height'), 10);
+			var h2 = parseInt(getStyle('prop','height'), 10);
+			var h3 = parseInt(getStyle('prof','height'), 10);
+			var h = Math.max(h1,h2,h3);
+			var ht = h+'px';
+			document.getElementById('prons').style.height=ht;
+			document.getElementById('prop').style.height=ht;
+			document.getElementById('prof').style.height=ht;
 
-		  $('.block').block({ 
-		                      message: '<h2 style="text-align:center;">Processing</h2>', 
-		                      css: { 
-		                          border: 'none',
-		                          padding: '0px 120px 0px 80px', 
-		                          backgroundColor: '#000', 
-		                          '-webkit-border-radius': '10px', 
-		                          '-moz-border-radius': '10px', 
-		                          opacity: .5, 
-		                          color: '#fff' 
-		                      } 
-		                  }); 
-		           
-		  //setTimeout($('.probox').unblock(), 6000);
-
-		  dataRenderer();
-
-		  var outer_diameter = 220,
-		  	  donut_thickness = outer_diameter*0.2;
-
-		  plot1 = jQuery.jqplot ('pie', [ piedata, s2 ] , 
-		    { 
-		      seriesDefaults: {
-		        renderer: jQuery.jqplot.DonutRenderer,
-		        rendererOptions:{
-					seriesColors: [ "#FF9900", "#38761D", "#3366CC"],
-					sliceMargin: 1,
-					diameter: outer_diameter,
-					thickness: donut_thickness,
-					startAngle: -250,
-					showDataLabels: true,
-					dataLabels: 'percent',
-					highlightMouseOver: false,
-					highlightMouseDown: false
-		        }
-		      }, 
-		      legend: { show:true},
-		      grid: {borderWidth:0, background: '#ffffff', shadow:false}
-		    }
-		  );
-
-		  plot2 = jQuery.jqplot ('pie1', [ piedata, s2 ] , 
-		    { 
-		      seriesDefaults: {
-		        renderer: jQuery.jqplot.DonutRenderer,
-		        rendererOptions:{
-					seriesColors: [ "#FF9900", "#38761D", "#3366CC"],
-					sliceMargin: 1,
-					diameter: outer_diameter,
-					thickness: donut_thickness,
-					startAngle: -250,
-					showDataLabels: true,
-					dataLabels: 'percent',
-					highlightMouseOver: false,
-					highlightMouseDown: false
-		        }
-		      }, 
-		      legend: { show:true},
-		      grid: {borderWidth:0, background: '#ffffff', shadow:false}
-		    }
-		  );
-
-		  $("#block_test").click(function() {
-
-		      $('.block').block({ 
-		                      message: '<h1>Processing</h1>', 
-		                      css: { border: '3px solid #a00' } 
-		                  }); 
-		           
-		      setTimeout($('.probox').unblock(), 8000);
-		    
-		  });
-		});
+			blockDiv('.block');
+		  	dataRenderer();
+			plot1 = emptyPieRenderer("pie1");
+			plot2 = emptyPieRenderer("pie2");
+		});	
 	</script>
 <%end%>
 
@@ -95,9 +23,8 @@
 <h1><%= Project.find(params[:pid]).name %></h1>
 
 <div class="container">
-	<div class="block" id="pie" style="height:300px; width:400px; padding:0px;"></div>
-
 	<div class="block" id="pie1" style="height:300px; width:400px; padding:0px;"></div>
+	<div class="block" id="pie2" style="height:300px; width:400px; padding:0px;"></div>
 
 	<div id="summary" style="height:230px;">
 		<h2>Summary</h2>
