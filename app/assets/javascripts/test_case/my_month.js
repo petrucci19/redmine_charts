@@ -130,7 +130,7 @@ function myMonthRenderer(url, div_id, month, year, options) {
               }
             })
           .select("title")
-            .text(  function(d) { return d + dataset[d] + " hours on " ; }   );   
+            .text(  function(d) { return dataset[d] + " hours on " + d; }   );   
   };
 
 
