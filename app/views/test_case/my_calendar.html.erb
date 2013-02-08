@@ -1,38 +1,4 @@
 <% content_for :head do %>
-	<style>
-		#year {
-		  font: 10px sans-serif;
-		  
-		}
-
-		.day {
-		  fill: #F5F5F5;
-
-		}
-
-		.month {
-		  fill: none;
-		  stroke: #C6C6C6;
-		  stroke-width: 1px;
-		  shape-rendering: crispEdges;
-		}
-
-		.month_label {
-		  fill: #B0B0B0;
-		}
-
-		.RdYlGn .q0-11{fill:rgb(165,0,38)}
-		.RdYlGn .q1-11{fill:rgb(215,48,39)}
-		.RdYlGn .q2-11{fill:rgb(244,109,67)}
-		.RdYlGn .q3-11{fill:rgb(253,174,97)}
-		.RdYlGn .q4-11{fill:rgb(254,224,139)}
-		.RdYlGn .q5-11{fill:rgb(255,255,191)}
-		.RdYlGn .q6-11{fill:rgb(217,239,139)}
-		.RdYlGn .q7-11{fill:rgb(166,217,106)}
-		.RdYlGn .q8-11{fill:rgb(102,189,99)}
-		.RdYlGn .q9-11{fill:rgb(26,152,80)}
-		.RdYlGn .q10-11{fill:rgb(0,104,55)}
-	</style>
 
 	<script type="text/javascript">
 	
@@ -41,9 +7,22 @@
 					//$(this > option)[0].attr("disabled", "disabled");
 					year_from = $('select#year_from :selected').val();
 					year_to = $('select#year_to :selected').val();
-
-					ajaxYearRenderer(year_from, (Number(year_to) + 1).toString() );
-					
+					year_to = (Number(year_to) + 1).toString();
+					var url = '/my_calendar/' + year_from + '/to/' + year_to;
+					var color_range = [ [0,0,"rgb(165,0,38)"],
+										[1,1,"rgb(215,48,39)"],
+										[2,2,"rgb(244,109,67)"],
+										[3,3,"rgb(253,174,97)"],
+										[4,4,"rgb(254,224,139)"],
+										[5,5,"rgb(255,255,191)"],
+										[6,6,"rgb(217,239,139)"],
+										[7,7,"rgb(166,217,106)"],
+										[8,8,"rgb(102,189,99)"],
+										[9,9,"rgb(26,152,80)"],
+										[10,10,"rgb(0,104,55)"]
+									  ];
+					var options = { width:1000, height:200, cellSize:15, padding:3, color_range: color_range, default_color: "#F5F5F5" };
+					ajaxYearRenderer(url, "#year", year_from, year_to, options);				
 				});	
 		});
 

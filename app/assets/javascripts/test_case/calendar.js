@@ -1,25 +1,24 @@
-function calendarDayRenderer(plot,select){
+function calendarDayRenderer(url,plot,table,colors){
 	jQuery.ajax( {
            
         cache: false,
-        url: '/calendar/' + select,
+        url: url,
         dataType: "json",
         success:  function(data){ 
         	var arr=new Array();		        	
         	var x=10;
         	var i=0;
-        	table1 = document.getElementById('labels_table');
         	for (var key in data) {
 			  if (data.hasOwnProperty(key)) {
 			  	var date_arr = key.split("-");
 			  	var d = new Date(date_arr[0],date_arr[1]-1,date_arr[2]);
 			  	var date_str = "day-"+ date_arr[0] + "-" + date_arr[1] + "-" + date_arr[2];
 			  	var str = dayNameShort[d.getDay()] + ", " + monthNameShort[d.getMonth()] + " " + date_arr[2];
-				var bubble_opt = { label: date_str , color : "#000000"};
+				var bubble_opt = { label: date_str , color : colors[0]};
 			  	if (data[key]>3) {
-			  		bubble_opt.color="#868686";
+			  		bubble_opt.color=colors[1];
 			  	}
-			  	cell = table1.rows[0].cells[i];
+			  	var cell = table.rows[0].cells[i];
 			  	cell.firstChild.data = str;
 			    arr.push(new Array(x,2,data[key],bubble_opt));
 			  }
@@ -33,30 +32,27 @@ function calendarDayRenderer(plot,select){
     });
 };
 
-function calendarWeekRenderer(plot,select){
+function calendarWeekRenderer(url,plot,table,colors){
 	jQuery.ajax( {
            
         cache: false,
-        url: '/calendar/' + select,
+        url: url,
         dataType: "json",
-        success:  function(data){ 
-        	//console.log(select);                
-        	console.log(data);
+        success:  function(data){                 
         	var arr=new Array();		        	
         	x=10;
         	i=0;
-        	table1 = document.getElementById('labels_table');
         	for (var key in data) {
 			  if (data.hasOwnProperty(key)) {
 			  	var date_arr = key.split("-");
 			  	var date_str = "week-" + date_arr[0] + "-" + date_arr[1];
 			  	var str = "Week " + date_arr[1] + ", " + date_arr[0];
-			  	var bubble_opt = { label: date_str , color: "#00FF66"};
+			  	var bubble_opt = { label: date_str , color: colors[0]};
 			  	if (data[key]>3) {
-			  		bubble_opt.color="#00CC66";
+			  		bubble_opt.color=colors[1];
 			  	}
 
-			  	cell = table1.rows[0].cells[i];
+			  	cell = table.rows[0].cells[i];
 			  	cell.firstChild.data = str;
 			    arr.push(new Array(x,2,data[key],bubble_opt));
 			  }
@@ -70,20 +66,20 @@ function calendarWeekRenderer(plot,select){
     });
 };
 
-function calendarTooltip(chart_id, tooltip_id) {
+function calendarTooltip(url, plot, chart_id, tooltip_id) {
 	$(chart_id).bind('jqplotDataHighlight', 
 	    function (ev, seriesIndex, pointIndex, data, radius) {    
 			var chart_left = $(chart_id).offset().left,
 			chart_top = $(chart_id).offset().top,
-			x = test_case_calendar.axes.xaxis.u2p(data[0]),  // convert x axis unita to pixels
-			y = test_case_calendar.axes.yaxis.u2p(data[1]);  // convert y axis units to pixels
+			x = plot.axes.xaxis.u2p(data[0]),  // convert x axis unita to pixels
+			y = plot.axes.yaxis.u2p(data[1]);  // convert y axis units to pixels
 			var color = 'rgb(50%,50%,100%)';
 			
       	jQuery.ajax( {
-           		url: '/tooltip?date=' + data[3].label,
+           		url: url + data[3].label,
 		        dataType: "json",
 		        success:  function(data){
-		        	var ns,f,p=0;                 
+		        	var ns=0,f=0,p=0;                 
 		        	if(data[1] != undefined) {ns= data[1]};
 		        	if(data[2] != undefined) {f= data[2]};
 		        	if(data[3] != undefined) {p= data[3]};
@@ -103,9 +99,9 @@ function calendarTooltip(chart_id, tooltip_id) {
 	      });
 }
 
-function calendarPlot(chart_div,array) {
+function calendarPlot(chart_div,array,colors) {
 	var plot = $.jqplot(chart_div,array,{
-    	seriesColors: ["#898989"], 
+    	seriesColors: colors, 
 		axes: {
 	        xaxis: {
 	        	min:10, max:100, numberTicks: 10, showTicks: false,

@@ -1,135 +1,29 @@
 <% content_for :head do %>
-
-  <style>
-  
-    #my_month_title {
-      width:448px;
-      text-align: center;
-      font: 15px "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
-      color: #6D6D6D;
-    }
-
-    #my_month {
-      font: 10px sans-serif;
-      width:448px;
-      height:350px;
-      border: 1px solid;
-      border-radius: 5px;
-      border-color: #ECECEC;
-    }
-
-    .day_rect {
-      fill: #EFEFEF;
-    }
-
-    .day {
-
-    }
-
-    .day_label {
-      font: 12px sans-serif;
-      fill:  #7A7A7A;
-      shape-rendering:crispEdges;
-    }
-
-    .date_label {
-      shape-rendering:crispEdges;
-    }
-
-    .week {
-      fill: none;
-      stroke: #ECECEC;
-      stroke-width: 1px;
-      shape-rendering:crispEdges;
-        
-    }
-
-    .month {
-      fill: none;
-      stroke: #000000;
-      stroke-width: 1px;
-    }
-
-  </style>
-
   <script type="text/javascript">
 
     $(document).ready(function(){
       var today = getTodaysDate();
       var month = today.getMonth();
       var year =  today.getFullYear();
-
-      ajaxMonthRenderer(month,year);
-
-      $(".month_select").change(function() {
-          //$(this > option)[0].attr("disabled", "disabled");
-          month = $('select#month :selected').val();
-          year = $('select#year :selected').val();
-
-          if(month=="empty" || year=="empty") {
-            //d3.select("#my_month").selectAll("svg").remove();
-          }
-          else {
-            ajaxMonthRenderer(month, year);
-          }
-      });
-
-      $("#prev_month").click(function() {
-        if(month=="0") {
-          month="11";
-          year--;
-        }
-        else {
-          month--;
-        }
-        ajaxMonthRenderer(month,year);
-      });
-
-      $("#next_month").click(function() {
-        if(month=="11") {
-          month="0";
-          year++;
-        }
-        else {
-          month++;
-        }
-        ajaxMonthRenderer(month,year);
-      }); 
-
+      var url = '/my_month';
+      var color_range = [ [0,0,"rgb(165,0,38)"],
+                          [1,1,"rgb(215,48,39)"],
+                          [2,2,"rgb(244,109,67)"],
+                          [3,3,"rgb(253,174,97)"],
+                          [4,4,"rgb(254,224,139)"],
+                          [5,5,"rgb(255,255,191)"],
+                          [6,6,"rgb(217,239,139)"],
+                          [7,7,"rgb(166,217,106)"],
+                          [8,8,"rgb(102,189,99)"],
+                          [9,9,"rgb(26,152,80)"],
+                          [10,10,"rgb(0,104,55)"]
+                        ];
+      var options = {width:450,color_range: color_range};
+      myMonthRenderer(url, "my_month", month,year,options);
     });   
 
   </script>
 <% end %>
 
-<div>
-  <select class="month_select" id="month">
-    <option value="empty">--Select--</option>
-    <option value="0">January</option>
-    <option value="1">February</option>
-    <option value="2">March</option>
-    <option value="3">April</option>
-    <option value="4">May</option>
-    <option value="5">June</option>
-    <option value="6">July</option>
-    <option value="7">August</option>
-    <option value="8">September</option>
-    <option value="9">October</option>
-    <option value="10">November</option>
-    <option value="11">December</option>
-  </select>
 
-  <select class="month_select" id="year">
-    <option value="empty">--Select--</option>
-    <option value="2009">2009</option>
-    <option value="2010">2010</option>
-    <option value="2011">2011</option>
-      <option value="2012">2012</option>
-  </select>
-</div>
-
-<div id="my_month_title" style="margin-top:20px; min-height:30px;"></div>
 <div id="my_month"></div>
-<div style="margin-top:20px;">
-  <button type="button" id="prev_month">Previous</button>
-  <button type="button" id="next_month" style="margin-left:332px;">Next</button>
-</div>

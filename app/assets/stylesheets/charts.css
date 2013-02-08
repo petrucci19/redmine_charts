@@ -1,0 +1,60 @@
+/* my_month begins*/
+#my_month_title {
+  text-align: center;
+  font: 15px "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+  color: #6D6D6D;
+  margin-top:20px;
+  min-height:30px;
+}
+
+#my_month_calendar {
+  font: 10px sans-serif;
+  border: 1px solid;
+  border-radius: 5px;
+  border-color: #ECECEC;
+}
+
+#my_month_buttons {
+  margin-top:20px;
+}
+
+.my_month_day_rect {
+  fill: #EFEFEF;
+}
+
+.my_month_day_label {
+  font: 12px sans-serif;
+  fill:  #7A7A7A;
+  shape-rendering:crispEdges;
+}
+
+.my_month_date_label {
+  shape-rendering:crispEdges;
+}
+
+.my_month_week {
+  fill: none;
+  stroke: #ECECEC;
+  stroke-width: 1px;
+  shape-rendering:crispEdges;
+    
+}
+/* my_month ends */
+
+
+/* my_calendar begins */
+#year {
+  font: 10px sans-serif; 
+}  /*change to my_calendar_year*/
+
+.my_calendar_month {
+  fill: none;
+  stroke: #C6C6C6;
+  stroke-width: 1px;
+  shape-rendering: crispEdges;
+}
+
+.my_calendar_month_label {
+  fill: #B0B0B0;
+}
+/* my_calendar ends */

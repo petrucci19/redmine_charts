@@ -7,7 +7,7 @@
 			var table1 = document.getElementById('labels_table');
 		    var array = [[0, 2, 0], [0, 2, 0], [0, 2, 0], [0, 2, 0], [0, 2, 0], [0, 2, 0], [0, 2, 0]];
 		    var cell;
-		    var test_case_calendar = calendarPlot("chart1",array);
+		    var test_case_calendar = calendarPlot("chart1",array,["#898989"]);
 
 		    $("#select_calendar").change(function() {
 				var select = $('select#select_calendar :selected').val();
@@ -20,14 +20,14 @@
 					}
 				}
 				if (select=="days") {
-					calendarDayRenderer(test_case_calendar,select);
+					calendarDayRenderer('/calendar/' + select, test_case_calendar, table1,["#000000","#868686"]);
 				}
 				else if (select=="weeks"){
-					calendarWeekRenderer(test_case_calendar,select);
+					calendarWeekRenderer('/calendar/' + select, test_case_calendar, table1, ["#000000","#868686"]);
 				}
 			});
 		    
-		    calendarTooltip("#chart1","#tooltip1b");
+		    calendarTooltip("/tooltip?date=",test_case_calendar,"#chart1","#tooltip1b");
 			
 		});
 	</script>

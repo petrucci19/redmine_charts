@@ -1,24 +1,41 @@
-function ajaxYearRenderer(year_from, year_to){
+/*  
+	Usage:
+	url 	-> url for ajax request
+	div_id 	-> div for svg
+	Note that year_from and year_to are inclusive.
+	options = {
+		svg_width	: should be a number. default value is 1000
+		svg_height	: should be a number. default value is 200
+		cellSize	: should be a number. default value is 15
+		padding		: should be a number. default value is 3
+		color_range	: [ [range_lower, range_upper, range_color], [range_lower, range_upper, range_color]... , default_color]
+		Eg. color_range : [[1,5,"#FFF"],[6,8,"#BBB"],[9,10,"#CCC"], "#000"];
+		default_color: should be a color string. default value is "#F5F5F5"
+	}
+	Note that each year has its own svg.
+*/
+
+function ajaxYearRenderer(url, div_id, year_from, year_to, options){
 	jQuery.ajax( {       
-       //url: '/year_data?from=' + year_from + '?to=' + year_to,
-        url: '/my_calendar/' + year_from + '/to/' + year_to,
+        url: url,
         dataType: "json",
         success:  function(dataset){
-        	$("#year").html("");
-        	yearRenderer(dataset, year_from, year_to);	
+        	$(div_id).html("");
+        	yearRenderer(dataset, div_id, year_from, year_to, options);	
     	},
     	error : function(XMLHttpRequest, textStatus, errorThrown) { console.log('Error year calendar ajax!'); }
-
     });
 }
 
-function yearRenderer(dataset, year_from, year_to){
-	
-	var width = 1000,
-    height = 200,
-    cellSize = 15,	// cell size
-    padding = 3;	// cell padding
+function yearRenderer(dataset, div_id, year_from, year_to, options){
 
+	console.log(options);
+	
+	var width 	= (options.width != null && typeof options.width == "number" ) ?options.width :1000,
+		height 	= (options.height != null && typeof options.height == "number" ) ?options.height :200,
+		cellSize= (options.cellSize != null && typeof options.cellSize == "number" ) ?options.cellSize :15,
+		padding = (options.padding != null && typeof options.padding == "number" ) ?options.padding :3,
+		colors	= options.color_range;
 
 	var day = d3.time.format("%w"),
 	    week = d3.time.format("%U"),
@@ -29,7 +46,7 @@ function yearRenderer(dataset, year_from, year_to){
 	    .domain([0,10])
 	    .range(d3.range(11).map(function(d) { return "q" + d + "-11"; }));
 
-	var svg = d3.select("#year").selectAll("svg")
+	var svg = d3.select(div_id).selectAll("svg")
 	    .data(d3.range(year_from, year_to))
 	  .enter().append("svg")
 	    .attr("width", width)
@@ -44,37 +61,45 @@ function yearRenderer(dataset, year_from, year_to){
 	    .attr("fill", "#737373")
 	    .text(function(d) { return d; });
 
-	var rect = svg.selectAll(".day")
+	var rect = svg.selectAll(".my_calendar_day")
 	    .data(function(d) { return d3.time.days(new Date(d, 0, 1), new Date(d + 1, 0, 1)); })
 	  .enter().append("rect")
-	    .attr("class", "day")
+	    .attr("class", "my_calendar_day")
 	    .attr("width", cellSize)
 	    .attr("height", cellSize)
 	    .attr("x", function(d) { return (week(d) * (cellSize + padding)) ; })
 	    .attr("y", function(d) { return (day(d) * (cellSize + padding)) ; })
+	    .attr("fill", (options.default_color!=null)?options.default_color:"#F5F5F5")
 	    .datum(format);
 
 	rect.append("title")
 	    .text(function(d) { return d; });
 
-	svg.selectAll(".month")
+	svg.selectAll(".my_calendar_month")
 	    .data(function(d) { return d3.time.months(new Date(d, 0, 1), new Date(d + 1, 0, 1)); })
 	  .enter().append("path")
-	    .attr("class", "month")
+	    .attr("class", "my_calendar_month")
 	    .attr("d", monthPath);
 	
-	var monthShort = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-
-	svg.selectAll(".month_label")
+	svg.selectAll(".my_calendar_month_label")
 	    .data( d3.range(0,12) )
 	  .enter().append("text")
-	    .attr("class", "month_label")
+	    .attr("class", "my_calendar_month_label")
 	    .attr("x", function(d) { return (d+0.45)*(cellSize+padding)*4.35 })
 	    .attr("y", -5)
-	    .text( function(d) { return monthShort[d] } );
+	    .text( function(d) { return monthNameShort[d] } );
 
 	rect.filter(function(d) { return d in dataset; })
-	      .attr("class", function(d) { return "day " + color(dataset[d]); })
+	      .attr("class", "day")
+	      .attr("fill", function(d) {
+	      		console.log(dataset[d]);
+	      		for (var i=0; i<colors.length; i++){
+	      			if (dataset[d] >= colors[i][0] && dataset[d] <= colors[i][1]){
+	      				console.log(colors[i][2]);
+	      				return colors[i][2];
+	      			}
+	      		}
+	      	})
 	    .select("title")
 	      .text(function(d) { return d + ": " + dataset[d]; });
 	
@@ -90,5 +115,5 @@ function yearRenderer(dataset, year_from, year_to){
 	      + "H" + (w0 + 1) * (cellSize+padding) + "Z";
 	}
 
-	d3.select(self.frameElement).style("height", "2910px");
+	//d3.select(self.frameElement).style("height", "2910px");
 };
