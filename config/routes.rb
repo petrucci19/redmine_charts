@@ -23,6 +23,7 @@ Project1::Application.routes.draw do
   get "/my_calendar/(:year_from/(to/:year_to))" => "test_case#my_calendar"
   get "/my_month/(:month/(and/:year))" => "test_case#my_month"
   match "/ten_days" => "test_case#ten_days"
+  match "/activity" => "test_case#activity"
 
   #match "/author/list" => "author#list"
   match "/author/list/:aid" => "author#list"

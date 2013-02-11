@@ -147,6 +147,42 @@ class TestCaseController < ApplicationController
 
 	end
 
+	def activity
+		dataset = [
+			{date:"20-Dec-11",val:95.95},
+			{date:"19-Dec-11",val:82.21},
+			{date:"16-Dec-11",val:81.02},
+			{date:"15-Dec-11",val:8.94},
+			{date:"14-Dec-11",val:80.19},
+			{date:"13-Dec-11",val:88.81},
+			{date:"12-Dec-11",val:91.84},
+			{date:"9-Dec-11",val:3.62},
+			{date:"8-Dec-11",val:39.66},
+			{date:"7-Dec-11",val:38.09},
+			{date:"6-Dec-11",val:9.95},
+			{date:"5-Dec-11",val:93.01},
+			{date:"2-Dec-11",val:89.70},
+			{date:"1-Dec-11",val:87.93},
+			{date:"30-Nov-11",val:38.20},
+			{date:"29-Nov-11",val:37.20},
+			{date:"28-Nov-11",val:76.12},
+			{date:"25-Nov-11",val:63.57},
+			{date:"23-Nov-11",val:66.99},
+			{date:"22-Nov-11",val:76.51},
+			{date:"21-Nov-11",val:69.01},
+			{date:"18-Nov-11",val:74.94},
+			{date:"17-Nov-11",val:37.41},
+			{date:"16-Nov-11",val:54.77},
+			{date:"15-Nov-11",val:68.83},
+			{date:"14-Oct-11",val:79.26}
+		];
+		respond_to do |format|
+			format.html
+		    format.xml { render :xml => dataset }
+		    format.json { render :json => dataset }
+		end
+	end
+
 
 	def calendar_tooltip
 		@tooltip_date = params[:date].split("-")
@@ -173,8 +209,6 @@ class TestCaseController < ApplicationController
 		    format.xml { render :xml => @tooltip_return }
 		    format.json { render :json => @tooltip_return }
 		end
-
-
 	end
 
 

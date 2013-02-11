@@ -58,3 +58,35 @@
   fill: #B0B0B0;
 }
 /* my_calendar ends */
+
+
+
+/* activity begins */
+#my_activity_div {
+  border: 1px solid;
+  border-radius: 5px;
+  border-color: #ECECEC;
+}
+
+#line_graph {
+  font: 10px sans-serif;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #3cc5de;
+}
+
+.area {
+  fill: #e7f8eb;
+  /*fill: steelblue;*/
+}
+
+.path2 {
+  stroke: #3cc5de;
+  stroke-width: 2px;
+  stroke-linejoin: round;
+  fill:none;
+}
+ 
+

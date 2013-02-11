@@ -1,0 +1,15 @@
+<% content_for :head do %>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      var url = "/activity";
+      var options = {};
+      myActivityRenderer(url, "line_graph", options);
+    });
+  
+  </script>
+
+<% end %>
+
+
+<div id="line_graph"> </div>
