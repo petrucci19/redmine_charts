@@ -62,10 +62,24 @@
 
 
 /* activity begins */
+
+
 #my_activity_div {
   border: 1px solid;
   border-radius: 5px;
-  border-color: #ECECEC;
+  border-color: #DDDDDD;
+}
+
+#my_activity_label {
+  box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+  padding:10px;
+  background-color: #ECECEC;
+  text-align: right;
+  font: 10px sans-serif;
+  border-bottom: 1px solid;
+  border-color: #DDDDDD;
 }
 
 #line_graph {
@@ -88,5 +102,16 @@
   stroke-linejoin: round;
   fill:none;
 }
+
+.my_activity_circle {
+  stroke: #3cc5de;
+  stroke-width: 2px;
+  stroke-linejoin: round;
+  fill:#3cc5de;
+}
  
+.my_activity_rect {
+  fill: #FFF;
+  fill-opacity:0;
+}
 
