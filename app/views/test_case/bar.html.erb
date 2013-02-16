@@ -3,7 +3,8 @@
 
 		$(document).ready(function(){
 			$("#bar1_load").click(function() {
-				bar1Renderer();
+				options = {barWidth:10, colors:[ "#3366CC", "#DC3912", "#FF9900", "#109618"], labels: ['Expected Hours','Design and Analysis','Development','Bug Fixing'] };
+				bar1Renderer('/bar1', "bar1", options);
 			});			
 		});
 

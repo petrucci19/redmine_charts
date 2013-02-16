@@ -1,4 +1,11 @@
-function bar1Renderer(){
+/*
+ * Usage:
+   url, div_id, options = { barWidth, colors, labels}
+  
+*/
+
+
+function bar1Renderer(url, div_id, options){
 			
 	var bar1,arr,bar_ticks,obj,
 	    inn_arr_8 =[], inn_arr_1 = [], inn_arr_2 = [], inn_arr_3=[];
@@ -6,7 +13,8 @@ function bar1Renderer(){
 	jQuery.ajax( {
            
         cache: false,
-        url: '/bar1',
+        //url: '/bar1',
+        url: url,
         dataType: "json",
         success:  function(data){
         	console.log(data);
@@ -22,21 +30,29 @@ function bar1Renderer(){
 			  }
 			}
 			arr.push(inn_arr_8, inn_arr_1, inn_arr_2, inn_arr_3);			        
-	        $("#bar1").html("");
-	        $.jqplot('bar1', arr, {
-		        seriesColors: [ "#3366CC", "#DC3912", "#FF9900", "#109618"],
+	        $("#" + div_id).html("");
+	        $.jqplot(div_id, arr, {
+		        //seriesColors: [ "#3366CC", "#DC3912", "#FF9900", "#109618"],
+		        seriesColors : options.colors,
 		        seriesDefaults:{
 		            renderer:$.jqplot.BarRenderer,
 		            rendererOptions: {
 		            	fillToZero: true,
-		            	barWidth: 10
+		            	//barWidth: 10
+		            	barWidth: options.barWidth
 		            }				            
 		        },
-		        series:[
+		        /*series:[
 		        	{label:'Expected Hours'},
 		            {label:'Design and Analysis'},
 		            {label:'Development'},
 		            {label:'Bug Fixing'}
+		        ],*/
+		        series: [
+					{label: options.label[0]},
+					{label: options.label[1]},
+					{label: options.label[2]},
+					{label: options.label[3]}
 		        ],
 		        legend: {
 		            show: true,
