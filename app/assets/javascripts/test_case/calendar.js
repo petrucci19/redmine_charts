@@ -1,6 +1,6 @@
-function calendarDayRenderer(url,plot,table,colors){
-	jQuery.ajax( {
-           
+function calendarDayRenderer(url,div_id,plot,table,colors){
+	
+	jQuery.ajax({       
         cache: false,
         url: url,
         dataType: "json",
@@ -134,4 +134,14 @@ function calendarPlot(chart_div,array,colors) {
         grid: {borderWidth:0, background: '#ffffff', shadow:false}
     });
     return plot;
+}
+
+
+function calendarDivLayout() {
+	div_to = document.getElementById(div_id);
+    calendar_chart_outer = document.createElement("div");
+    calendar_chart_outer.setAttribute("id", "chart_outer");
+    calendar_chart_outer.innerHTML = monthSelect()+yearSelect();
+	
+	// incomplete
 }

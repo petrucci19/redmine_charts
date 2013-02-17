@@ -1,5 +1,17 @@
-/* my_month begins*/
-#my_month_title {
+.redmine_activity_div_with_border {
+  font: 10px sans-serif;
+  border: 1px solid;
+  border-radius: 5px;
+  border-color: #ECECEC;
+
+}
+.redmine_activity_div_no_border {
+  font: 10px sans-serif;
+}
+
+/* redmine_activity_monthly begins*/
+
+/*#my_month_title {
   text-align: center;
   font: 15px "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
   color: #6D6D6D;
@@ -16,53 +28,49 @@
 
 #my_month_buttons {
   margin-top:20px;
-}
+}*/
 
-.my_month_day_rect {
+.redmine_activity_monthly_day_rect {
   fill: #EFEFEF;
 }
 
-.my_month_day_label {
+.redmine_activity_monthly_day_label {
   font: 12px sans-serif;
   fill:  #7A7A7A;
   shape-rendering:crispEdges;
 }
 
-.my_month_date_label {
+.redmine_activity_monthly_date_label {
   shape-rendering:crispEdges;
 }
 
-.my_month_week {
+.redmine_activity_monthly_week {
   fill: none;
   stroke: #ECECEC;
   stroke-width: 1px;
   shape-rendering:crispEdges;
     
 }
-/* my_month ends */
+/* redmine_activity_monthly ends */
 
 
-/* my_calendar begins */
-#year {
-  font: 10px sans-serif; 
-}  /*change to my_calendar_year*/
+/* redmine_activity_yearly begins */
 
-.my_calendar_month {
+.redmine_activity_yearly_month {
   fill: none;
   stroke: #C6C6C6;
   stroke-width: 1px;
   shape-rendering: crispEdges;
 }
 
-.my_calendar_month_label {
+.redmine_activity_yearly_month_label {
   fill: #B0B0B0;
 }
-/* my_calendar ends */
+/* redmine_activity_yearly ends */
 
 
 
 /* activity begins */
-
 
 #my_activity_div {
   border: 1px solid;

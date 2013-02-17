@@ -1,6 +1,5 @@
 class CreateProjects < ActiveRecord::Migration
   def change
-    drop_table :projects
     create_table :projects do |t|
     	t.column :name, :string
     end
