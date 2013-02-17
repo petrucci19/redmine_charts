@@ -47,7 +47,7 @@ RedmineActivityD3.namespace("RedmineActivityD3.year");
 RedmineActivityD3.year = function(url, div_id, year, options) {
 	
 	var div_to = document.getElementById(div_id);
-    div_to.className += div_to.className ? 'redmine_activity_div_with_border' : 'redmine_activity_div_with_border';
+    div_to.className += div_to.className ? 'redmine_activity_div_no_border' : 'redmine_activity_div_no_border';
   
     ajaxYearRenderer();
 
